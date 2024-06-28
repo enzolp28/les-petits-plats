@@ -1,4 +1,4 @@
-import {renderRecipes} from './renders.js';
+import {renderRecipes, renderFilters} from './renders.js';
 
 async function getRecipes(){
     const response = await fetch('./api/recipes.json');
@@ -23,7 +23,7 @@ mainSearch.addEventListener('input', (e) => {
     }; 
 
     const filteredRecipes = currentRecipes.filter((recipe) => {
-        return recipe.name.toLowerCase().includes(searchValue);
+        return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
     });
 
     renderRecipes(filteredRecipes);
@@ -37,6 +37,7 @@ async function init(){
     initialRecipes = await getRecipes();
     currentRecipes = initialRecipes;
     renderRecipes(currentRecipes);
+    renderFilters(currentRecipes);
 
 }
 

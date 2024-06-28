@@ -34,4 +34,42 @@ function renderRecipes(recipes){
 
 }
 
-export {renderRecipes}
+function renderFilters(currentRecipes){
+    const appareilsList = document.querySelector('#appareils-list');
+    const ustensilsList = document.querySelector('#ustensiles-list');
+    const ingredientsList = document.querySelector('#ingredients-list');
+
+    let appareils = new Set();
+    let ustensils = new Set();
+    let ingredients = new Set();
+
+    currentRecipes.forEach((recipe) => {
+        appareils.add(recipe.appliance);
+        recipe.ustensils.forEach((ustensil) => {
+            ustensils.add(ustensil);
+        })
+        recipe.ingredients.forEach((ingredient) => {
+            ingredients.add(ingredient.ingredient);
+        })
+        // ustensils.add(...recipe.ustensils);
+        //appareilsList.innerHTML += `<li>${recipe.appliance}</li>`
+    })
+    appareilsList.innerHTML = '';
+    appareils.forEach((appareil) => {
+        appareilsList.innerHTML += `<li>${appareil}</li>`
+    })
+    
+    ustensilsList.innerHTML = '';
+    ustensils.forEach((ustensil) => {
+        ustensilsList.innerHTML += `<li>${ustensil}</li>`
+    })
+
+    ingredientsList.innerHTML = '';
+    ingredients.forEach((ingredient) => {
+        ingredientsList.innerHTML += `<li>${ingredient}</li>`
+    })
+
+
+}
+
+export {renderRecipes, renderFilters}
