@@ -1,6 +1,12 @@
-import {renderRecipes, renderFilters} from './renders.js';
+import { renderRecipes, renderFilters } from './renders.js';
+let appareils = new Set();
+let ustensils = new Set();
+let ingredients = new Set();
+let currentRecipes;
+let initialRecipes;
 
-async function getRecipes(){
+
+async function getRecipes() {
     const response = await fetch('./api/recipes.json');
     const recipes = await response.json();
     return recipes
@@ -8,6 +14,7 @@ async function getRecipes(){
 
 
 const mainSearch = document.querySelector('#main-search');
+
 mainSearch.addEventListener('input', (e) => {
     const searchValue = e.target.value.toLowerCase().trim();
 
@@ -18,9 +25,9 @@ mainSearch.addEventListener('input', (e) => {
     }
 
     // tant que la recherche est trop courte on ne fait rien
-    if(searchValue.length < 3){
+    if (searchValue.length < 3) {
         return;
-    }; 
+    };
 
     const filteredRecipes = currentRecipes.filter((recipe) => {
         return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
@@ -29,15 +36,34 @@ mainSearch.addEventListener('input', (e) => {
     renderRecipes(filteredRecipes);
 });
 
+const inputIngredients = document.querySelector('#search-ingredients');
 
-let currentRecipes;
-let initialRecipes;
+inputIngredients.addEventListener('input', (e) => {
+    const searchValue = e.target.value.toLowerCase().trim();
+    let filteredIngredients = [];
+    if (searchValue.length === 0) {
+        filteredIngredients = [...ingredients];
 
-async function init(){
+    }
+    else {
+        filteredIngredients = [...ingredients].filter((ingredient) => {
+            return ingredient.toLowerCase().includes(searchValue);
+        });
+    }
+    const ingredientsList = document.querySelector('#ingredients-list');
+    ingredientsList.innerHTML = '';
+    filteredIngredients.forEach((ingredient) => {
+        ingredientsList.innerHTML += `<li>${ingredient}</li>`
+
+    })
+});
+
+
+async function init() {
     initialRecipes = await getRecipes();
     currentRecipes = initialRecipes;
     renderRecipes(currentRecipes);
-    renderFilters(currentRecipes);
+    renderFilters(currentRecipes, appareils, ustensils, ingredients);
 
 }
 

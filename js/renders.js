@@ -34,14 +34,12 @@ function renderRecipes(recipes){
 
 }
 
-function renderFilters(currentRecipes){
+function renderFilters(currentRecipes, appareils, ustensils, ingredients){
     const appareilsList = document.querySelector('#appareils-list');
     const ustensilsList = document.querySelector('#ustensiles-list');
     const ingredientsList = document.querySelector('#ingredients-list');
 
-    let appareils = new Set();
-    let ustensils = new Set();
-    let ingredients = new Set();
+    
 
     currentRecipes.forEach((recipe) => {
         appareils.add(recipe.appliance);
