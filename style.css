@@ -27,7 +27,7 @@ header {
 
 }
 
-header img {
+.logo-home {
     position: absolute;
     top: 50px;
     left: 50px;
@@ -68,16 +68,18 @@ header img {
     font-size: 20px;
 }
 
-#search-button {
+#loupe {
     position: absolute;
-    top: 41px;
-    right: 45px;
+    top: 11px;
+    right: 10px;
     width: 50px;
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #fff;
-    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
 }
 
 
@@ -172,7 +174,7 @@ li {
 
 .card {
     width: 340px;
-    height: auto;
+    height: 100%;
     border-radius: 21px;
     box-shadow: 0px 4px 34px 30px #0000000A;
 }

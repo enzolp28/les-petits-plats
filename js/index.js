@@ -4,6 +4,11 @@ let ustensils = new Set();
 let ingredients = new Set();
 let currentRecipes;
 let initialRecipes;
+let filtresTags = {
+    appareils: [],
+    ustensils: [],
+    ingredients: []
+}
 
 
 async function getRecipes() {

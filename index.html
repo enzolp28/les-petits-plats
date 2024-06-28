@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les petits plats</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
-        <img src="./img/Logo.png" alt="logo les petits plats">
+        <img class="logo-home" src="./img/Logo.png" alt="logo les petits plats">
         <div class="title-input">
             <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</h1>
             <form action="" class="form-search">
                 <input type="text" id="main-search" placeholder="Rechercher une recette, un ingrédient, ...">
-                <button id="search-button">
-                    <svg class="search-icon" width="52" height="52" viewBox="0 0 51 52" fill="none" border-radius="10" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="51" height="52" rx="10" fill="#1B1B1B"/>
-                        <circle cx="22" cy="22" r="9.5" stroke="white"/>
-                        <line x1="30.3536" y1="30.6464" x2="39.3536" y2="39.6464" stroke="white"/>
-                    </svg>
-                </button>
+                <img id="loupe" src="./img/loupe.svg" alt="">
             </form>
         </div>
     </header>
@@ -35,7 +31,7 @@
                     <img src="./img/menu-dropdown/icon-search.svg" id="search" alt="">
                     <img src="./img/menu-dropdown/delete-search.svg" id="delete-search" alt="">
                     <ul id="ingredients-list">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -45,11 +41,11 @@
                     <img src="./img/menu-dropdown/arrow.svg" alt="">
                 </div>
                 <div class="dropdown-content">
-                    <input type="text" >
+                    <input type="text">
                     <img src="./img/menu-dropdown/icon-search.svg" id="search" alt="">
                     <img src="./img/menu-dropdown/delete-search.svg" id="delete-search" alt="">
                     <ul id="appareils-list">
-                    
+
                     </ul>
                 </div>
             </div>
@@ -59,11 +55,11 @@
                     <img src="./img/menu-dropdown/arrow.svg" alt="">
                 </div>
                 <div class="dropdown-content">
-                    <input type="text" >
+                    <input type="text">
                     <img src="./img/menu-dropdown/icon-search.svg" id="search" alt="">
                     <img src="./img/menu-dropdown/delete-search.svg" id="delete-search" alt="">
                     <ul id="ustensiles-list">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -196,4 +192,5 @@
     </div>
     <script src="./js/index.js" type="module"></script>
 </body>
+
 </html>
