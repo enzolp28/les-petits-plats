@@ -1,4 +1,6 @@
+// import des fonctions pour pouvoir les utiliser dans ce fichier
 import { renderRecipes, renderFilters } from './renders.js';
+
 let appareils = new Set();
 let ustensils = new Set();
 let ingredients = new Set();
@@ -10,9 +12,10 @@ let filtresTags = {
     ingredients: []
 }
 
-
+// Récupère les recettes dans le fichier json
 async function getRecipes() {
     const response = await fetch('./api/recipes.json');
+    console.log(response);
     const recipes = await response.json();
     return recipes
 }
@@ -20,8 +23,10 @@ async function getRecipes() {
 
 const mainSearch = document.querySelector('#main-search');
 
+// Permet de rechercher dans les recettes
 mainSearch.addEventListener('input', (e) => {
     const searchValue = e.target.value.toLowerCase().trim();
+    console.log(searchValue);
 
     if (searchValue.length === 0) {
         currentRecipes = initialRecipes;
@@ -63,12 +68,23 @@ inputIngredients.addEventListener('input', (e) => {
     })
 });
 
+function handleOpenDropdown() {
+    const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+    dropdownHeaders.forEach((dropdownHeader) => {
+        dropdownHeader.addEventListener('click', e => {
+            const dropdownParent = e.target.closest('.dropdown');
+            dropdownParent.classList.toggle('show');
+        });
+    });
+}
+
 
 async function init() {
     initialRecipes = await getRecipes();
     currentRecipes = initialRecipes;
     renderRecipes(currentRecipes);
-    renderFilters(currentRecipes, appareils, ustensils, ingredients);
+    renderFilters(currentRecipes, appareils, ustensils, ingredients, filtresTags, initialRecipes);
+    handleOpenDropdown();
 
 }
 

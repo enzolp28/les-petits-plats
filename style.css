@@ -252,3 +252,24 @@ li {
     font-weight: 400;
     color: #7A7A7A;
 }
+
+/* Menus dropdown */
+
+#ingredients-list li, #appareils-list li, #ustensiles-list li {
+    cursor: pointer;
+    padding: 10px;
+}
+
+#ingredients-list li:hover, #appareils-list li:hover, #ustensiles-list li:hover {
+    background-color: #FFD15B;
+    width: 100%;
+}
+
+.dropdown .dropdown-content {
+    display: none;
+}
+
+.dropdown.show .dropdown-content {
+    display: block;
+}
+
