@@ -39,35 +39,36 @@ mainSearch.addEventListener('input', (e) => {
         return;
     };
 
-    /* boucle native 
-    
-        const filteredRecipes = [];
-        const searchValueLower = searchValue.toLowerCase();
+    /* boucle native */
 
-        for (let i = 0; i < currentRecipes.length; i++) {
-            const recipe = currentRecipes[i];
-            const recipeNameIncludesSearchValue = recipe.name.toLowerCase().includes(searchValueLower);
-            const recipeDescriptionIncludesSearchValue = recipe.description.toLowerCase().includes(searchValueLower);
-            
-            let ingredientIncludesSearchValue = false;
-            for (let j = 0; j < recipe.ingredients.length; j++) {
-                if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchValueLower)) {
-                    ingredientIncludesSearchValue = true;
-                    break; // On peut arrêter la boucle dès qu'on trouve une correspondance
-                }
+    const filteredRecipes = [];
+    const searchValueLower = searchValue.toLowerCase();
+
+    for (let i = 0; i < currentRecipes.length; i++) {
+        const recipe = currentRecipes[i];
+        const recipeNameIncludesSearchValue = recipe.name.toLowerCase().includes(searchValueLower);
+        const recipeDescriptionIncludesSearchValue = recipe.description.toLowerCase().includes(searchValueLower);
+
+        let ingredientIncludesSearchValue = false;
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchValueLower)) {
+                ingredientIncludesSearchValue = true;
+                break; // On peut arrêter la boucle dès qu'on trouve une correspondance
             }
-            
-            if (recipeNameIncludesSearchValue || ingredientIncludesSearchValue || recipeDescriptionIncludesSearchValue) {
+        }
+
+        if (recipeNameIncludesSearchValue || ingredientIncludesSearchValue || recipeDescriptionIncludesSearchValue) {
             filteredRecipes.push(recipe);
         }
-        }
-
-    */
+    }
 
 
+
+    /*
     const filteredRecipes = currentRecipes.filter((recipe) => {
         return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
     });
+    */
 
 
     renderRecipes(filteredRecipes);
