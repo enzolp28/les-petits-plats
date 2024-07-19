@@ -19,7 +19,8 @@ function renderRecipes(recipes){
                         <div class="card-ingredient">
                             ${ingredients.map((ingredient) => `<div class="card-ingredient_list">
                                 <p>${ingredient.ingredient}</p>
-                                <p>${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ""} </p>
+                                ${ingredient.quantity ? `<p>${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ""} </p>` : ''}
+                                
                             </div>`
                             ).join('')}
                         </div>
@@ -128,7 +129,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
     const liUstensils = document.querySelectorAll('.tag-ustensil');
     const tagUstensils = document.querySelector('#tag-ustensiles');
-    
+
     liUstensils.forEach(element => {
         element.addEventListener('click', () => {
             const text = element.innerText;

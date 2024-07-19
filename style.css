@@ -246,7 +246,7 @@ li {
     color: #1B1B1B;
 }
 
-.card-ingredient_list :last-child {
+.card-ingredient_list :nth-child(2) {
     font-size: 14px;
     line-height: 19.12px;
     font-weight: 400;
