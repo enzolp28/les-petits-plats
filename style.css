@@ -99,7 +99,7 @@ main {
     height: auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     padding: 30px 70px;
     gap: 50px;
 }
@@ -273,3 +273,34 @@ li {
     display: block;
 }
 
+.tag {
+    background-color: #FFD15B;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.tag > span {
+    font-family: "Manrope" , sans-serif;
+    margin-right: 10px;
+    margin-left: 0;
+}
+
+.tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag button:hover {
+    color: #FFD15B;
+    background-color: #000;
+}
