@@ -5,9 +5,9 @@ import { renderRecipes, renderFilters } from './renders.js';
 let currentRecipes;
 let initialRecipes;
 let filtresTags = {
-    appareils: [],
-    ustensils: [],
-    ingredients: []
+    ingredients: [],
+    appliance: [],
+    ustensils: []
 }
 
 // Récupère les recettes dans le fichier json

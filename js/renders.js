@@ -78,7 +78,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         element.addEventListener('click', () => {
             const text = element.innerText;
             if (!filtresTags.ingredients.includes(text)) {
-                filtresTags.ingredients.push(text);
+                filtresTags.ingredients.push(text.toLowerCase());
                 const tag = document.createElement('div');
                 tag.classList.add('tag');
                 tag.setAttribute('data-type', 'ingredients');
@@ -92,7 +92,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                 button.addEventListener('click', deleteTag);
                 tag.appendChild(button);
                 tagIngredients.appendChild(tag);
-                applyFilters(currentRecipes, filtresTags, initialRecipes);
+                currentRecipes = applyFilters( filtresTags, initialRecipes);
                 console.log(currentRecipes);
                 renderRecipes(currentRecipes);
                 element.closest('.dropdown').classList.remove('show');
@@ -104,26 +104,49 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         const tagParent = e.target.parentElement;
         tagParent.remove();
         const type = tagParent.getAttribute('data-type');
-        filtresTags[type] = filtresTags[type].filter(tag => tag !== tagParent.getAttribute('data-content'));
-        applyFilters(currentRecipes, filtresTags, initialRecipes);
+        const tagValue = tagParent.getAttribute('data-content').toLowerCase();
+        filtresTags[type] = filtresTags[type].filter(tag => tag !== tagValue);
+        console.log(tagParent.getAttribute('data-content'));
+        currentRecipes = applyFilters( filtresTags, initialRecipes);
         renderRecipes(currentRecipes);
     }
 }
 
-function applyFilters(currentRecipes, filtresTags, initialRecipes) {
-    console.log(filtresTags);
-    currentRecipes = initialRecipes;
-    currentRecipes = currentRecipes.filter(recipe => {
-        const filtreIngretients = filtresTags.ingredients
+function applyFilters( filtresTags, initialRecipes) {
+    const { ingredients, appliance, ustensils } = filtresTags;
+    console.log(ingredients);
+    const filtredRecipes = [...initialRecipes].filter(recipe => {
+        const applianceInRecipe = recipe.appliance.toLowerCase();
+        const ustensilsInRecipe = recipe.ustensils;
+        const ingredientsInRecipe = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
 
-        const filtreAppareils = filtresTags.appareils
-        const filtreUstensils = filtresTags.ustensils
-        const appareilsExistants = filtreAppareils.some(appareil => recipe.appliance === appareil);
-        const ustensilsExistants = filtreUstensils.some(ustensil => recipe.ustensils.includes(ustensil));
-        const ingredientsExistants = filtreIngretients.some(ingredient => recipe.ingredients.some(ing => ing.ingredient === ingredient));
-        console.log(appareilsExistants, ustensilsExistants, ingredientsExistants);
-        return appareilsExistants || ustensilsExistants || ingredientsExistants
-    })
+        // let resultSearch = search(recipe, filtres.searchValue);
+
+        let resultAppliance = false;
+        if (appliance.length === 0) {
+            resultAppliance = true;
+        } else {
+            resultAppliance = appliance.includes(applianceInRecipe);
+        }
+
+        let resultUstensils = false;
+        if (ustensils.length === 0) {
+            resultUstensils = true;
+        } else {
+            resultUstensils = ustensilsInRecipe.some(ustensil => ustensils.includes(ustensil.toLowerCase()));
+        }
+
+        let resultIngredients = false;
+        if (ingredients.length === 0) {
+            resultIngredients = true;
+        } else {
+            resultIngredients = ingredientsInRecipe.some(ingredient => ingredients.includes(ingredient));
+        }
+
+
+        return resultAppliance && resultUstensils && resultIngredients;
+    });
+    return filtredRecipes
 }
 
 // export les fonctions 
