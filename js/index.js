@@ -62,14 +62,11 @@ mainSearch.addEventListener('input', (e) => {
         }
     }
 
-
-
     /*
     const filteredRecipes = currentRecipes.filter((recipe) => {
         return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
     });
     */
-
 
     renderRecipes(filteredRecipes);
 });
