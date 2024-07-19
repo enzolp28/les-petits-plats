@@ -33,7 +33,10 @@ function renderRecipes(recipes){
     document.querySelector('.container-card').innerHTML = html;
 }
 
-function renderFilters(currentRecipes, appareils, ustensils, ingredients, filtresTags, initialRecipes) {
+function renderFilters(currentRecipes, filtresTags, initialRecipes) {
+    let appareils = new Set();
+    let ustensils = new Set();
+    let ingredients = new Set();
     const appareilsList = document.querySelector('#appareils-list');
     const ustensilsList = document.querySelector('#ustensiles-list');
     const ingredientsList = document.querySelector('#ingredients-list');

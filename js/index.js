@@ -1,9 +1,7 @@
 // import des fonctions pour pouvoir les utiliser dans ce fichier
 import { renderRecipes, renderFilters } from './renders.js';
 
-let appareils = new Set();
-let ustensils = new Set();
-let ingredients = new Set();
+
 let currentRecipes;
 let initialRecipes;
 let filtresTags = {
@@ -71,6 +69,7 @@ mainSearch.addEventListener('input', (e) => {
 
 
     renderRecipes(filteredRecipes);
+    renderFilters(filteredRecipes, filtresTags, initialRecipes);
 });
 
 const inputIngredients = document.querySelector('#search-ingredients');
@@ -110,7 +109,7 @@ async function init() {
     initialRecipes = await getRecipes();
     currentRecipes = initialRecipes;
     renderRecipes(currentRecipes);
-    renderFilters(currentRecipes, appareils, ustensils, ingredients, filtresTags, initialRecipes);
+    renderFilters(currentRecipes, filtresTags, initialRecipes);
     handleOpenDropdown();
 
 }
