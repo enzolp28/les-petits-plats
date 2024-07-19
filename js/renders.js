@@ -70,7 +70,6 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
     })
 
     const tagIngredients = document.querySelector('#tag-ingredients');
-
     const liIngredients = document.querySelectorAll('.tag-ingredient');
 
     liIngredients.forEach(element => {
@@ -99,6 +98,62 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             }
         })
     });
+
+    const liAppareils = document.querySelectorAll('.tag-appareil');
+    const tagAppareils = document.querySelector('#tag-appareils');
+    liAppareils.forEach(element => {
+        element.addEventListener('click', () => {
+            const text = element.innerText;
+            if (!filtresTags.appliance.includes(text)) {
+                filtresTags.appliance.push(text.toLowerCase());
+                const tag = document.createElement('div');
+                tag.classList.add('tag');
+                tag.setAttribute('data-type', 'appliance');
+                tag.setAttribute('data-content', text);
+                const span = document.createElement('span');
+                span.innerText = text;
+                tag.appendChild(span);
+                const button = document.createElement('button');
+                button.classList.add('deleteTag');
+                button.innerText = 'X';
+                button.addEventListener('click', deleteTag);
+                tag.appendChild(button);
+                tagAppareils.appendChild(tag);
+                currentRecipes = applyFilters( filtresTags, initialRecipes);
+                renderRecipes(currentRecipes);
+                element.closest('.dropdown').classList.remove('show');
+            }
+        })
+    });
+
+    const liUstensils = document.querySelectorAll('.tag-ustensil');
+    const tagUstensils = document.querySelector('#tag-ustensiles');
+    
+    liUstensils.forEach(element => {
+        element.addEventListener('click', () => {
+            const text = element.innerText;
+            if (!filtresTags.ustensils.includes(text)) {
+                filtresTags.ustensils.push(text.toLowerCase());
+                const tag = document.createElement('div');
+                tag.classList.add('tag');
+                tag.setAttribute('data-type', 'ustensils');
+                tag.setAttribute('data-content', text);
+                const span = document.createElement('span');
+                span.innerText = text;
+                tag.appendChild(span);
+                const button = document.createElement('button');
+                button.classList.add('deleteTag');
+                button.innerText = 'X';
+                button.addEventListener('click', deleteTag);
+                tag.appendChild(button);
+                tagUstensils.appendChild(tag);
+                currentRecipes = applyFilters( filtresTags, initialRecipes);
+                renderRecipes(currentRecipes);
+                element.closest('.dropdown').classList.remove('show');
+            }
+        })
+    });
+
     function deleteTag(e) {
     
         const tagParent = e.target.parentElement;
