@@ -204,6 +204,8 @@ li {
 .card-content {
     padding: 30px 20px;
     background: #FFFFFF;
+    border-end-start-radius: 21px;
+    border-end-end-radius: 21px;
 }
 
 .card-content h3 {
@@ -213,13 +215,14 @@ li {
     margin-bottom: 20px;
 }
 
-.card-content_recette h4, .card-content_ingredient h4{
+.card-content_recette h4,
+.card-content_ingredient h4 {
     margin-bottom: 15px;
     color: #7A7A7A;
     font-weight: 700px;
     font-size: 12px;
     line-height: 16.39px;
-    
+
 }
 
 .card-content_recette p {
@@ -227,6 +230,13 @@ li {
     font-weight: 400;
     font-size: 14px;
     line-height: 19.12px;
+    overflow: hidden;
+    /* Cache le texte qui dépasse */
+    text-overflow: ellipsis;
+    /* Ajoute des points de suspension à la fin */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 .card-content_ingredient h4 {
@@ -255,12 +265,16 @@ li {
 
 /* Menus dropdown */
 
-#ingredients-list li, #appareils-list li, #ustensiles-list li {
+#ingredients-list li,
+#appareils-list li,
+#ustensiles-list li {
     cursor: pointer;
     padding: 10px;
 }
 
-#ingredients-list li:hover, #appareils-list li:hover, #ustensiles-list li:hover {
+#ingredients-list li:hover,
+#appareils-list li:hover,
+#ustensiles-list li:hover {
     background-color: #FFD15B;
     width: 100%;
 }
@@ -282,8 +296,8 @@ li {
     border-radius: 5px;
 }
 
-.tag > span {
-    font-family: "Manrope" , sans-serif;
+.tag>span {
+    font-family: "Manrope", sans-serif;
     margin-right: 10px;
     margin-left: 0;
 }
