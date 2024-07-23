@@ -289,11 +289,12 @@ li {
 
 .tag {
     background-color: #FFD15B;
-    padding: 5px 10px;
+    padding: 17px 18px 17px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
 .tag>span {
