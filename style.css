@@ -268,7 +268,9 @@ li {
 #ingredients-list,
 #appareils-list,
 #ustensiles-list {
-    margin-top: 30px;
+    margin: 30px 0;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 #ingredients-list li,
