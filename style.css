@@ -330,3 +330,12 @@ li {
     color: #FFD15B;
     background-color: #000;
 }
+
+.arrow {
+    margin-left: 10px;
+    transition: transform 0.3s;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}

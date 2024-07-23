@@ -95,11 +95,15 @@ inputIngredients.addEventListener('input', (e) => {
 });
 
 function handleOpenDropdown() {
+    const arrowMenu = document.querySelectorAll('.arrow');
     const dropdownHeaders = document.querySelectorAll('.dropdown-header');
-    dropdownHeaders.forEach((dropdownHeader) => {
+    dropdownHeaders.forEach((dropdownHeader, index) => {
         dropdownHeader.addEventListener('click', e => {
             const dropdownParent = e.target.closest('.dropdown');
             dropdownParent.classList.toggle('show');
+            arrowMenu[index].classList.toggle('rotate-180');
+            console.log(index);
+            
         });
     });
 }
