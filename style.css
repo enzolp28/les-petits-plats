@@ -126,11 +126,10 @@ main {
 }
 
 .dropdown-content {
-    display: block;
     position: absolute;
     top: 50px;
     background: #FFFFFF;
-    padding: 20px;
+    /* padding: 20px; */
     width: 100%;
     border-radius: 10px;
     z-index: 10;
@@ -138,23 +137,24 @@ main {
 }
 
 .dropdown-content input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #C6C6C6;
     border-radius: 2px;
-    margin-bottom: 20px;
+    margin-left: 10%;
+    /* margin-bottom: 20px; */
 }
 
 #search {
     position: absolute;
     right: 32px;
-    top: 31px;
+    top: 13px;
 }
 
 #delete-search {
     position: absolute;
     right: 55px;
-    top: 35px;
+    top: 15px;
 }
 
 li {
@@ -265,11 +265,20 @@ li {
 
 /* Menus dropdown */
 
+#ingredients-list,
+#appareils-list,
+#ustensiles-list {
+    margin-top: 30px;
+}
+
 #ingredients-list li,
 #appareils-list li,
 #ustensiles-list li {
     cursor: pointer;
-    padding: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    
+
 }
 
 #ingredients-list li:hover,
