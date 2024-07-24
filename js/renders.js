@@ -1,7 +1,7 @@
-function renderRecipes(recipes){
+function renderRecipes(recipes) {
     let html = '';
     recipes.forEach((recipe) => {
-        const {image, name, ingredients, time, description} = recipe;
+        const { image, name, ingredients, time, description } = recipe;
         html += `
             <div class="card">
                 <div class="card-img">
@@ -22,7 +22,7 @@ function renderRecipes(recipes){
                                 ${ingredient.quantity ? `<p>${ingredient.quantity} ${ingredient.unit ? ingredient.unit : ""} </p>` : ''}
                                 
                             </div>`
-                            ).join('')}
+        ).join('')}
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         appareilsList.innerHTML += `<li class="tag-appareil">${appareil}</li>`
 
     })
-    
+
     ustensilsList.innerHTML = '';
     ustensils.forEach((ustensil) => {
         ustensilsList.innerHTML += `<li class="tag-ustensil">${ustensil}</li>`
@@ -92,7 +92,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                 button.addEventListener('click', deleteTag);
                 tag.appendChild(button);
                 tagIngredients.appendChild(tag);
-                currentRecipes = applyFilters( filtresTags, initialRecipes);
+                currentRecipes = applyFilters(filtresTags, initialRecipes);
                 console.log(currentRecipes);
                 renderRecipes(currentRecipes);
                 element.closest('.dropdown').classList.remove('show');
@@ -120,12 +120,13 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                 button.addEventListener('click', deleteTag);
                 tag.appendChild(button);
                 tagAppareils.appendChild(tag);
-                currentRecipes = applyFilters( filtresTags, initialRecipes);
+                currentRecipes = applyFilters(filtresTags, initialRecipes);
                 renderRecipes(currentRecipes);
                 element.closest('.dropdown').classList.remove('show');
             }
         })
     });
+    
 
     const liUstensils = document.querySelectorAll('.tag-ustensil');
     const tagUstensils = document.querySelector('#tag-ustensiles');
@@ -148,27 +149,85 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                 button.addEventListener('click', deleteTag);
                 tag.appendChild(button);
                 tagUstensils.appendChild(tag);
-                currentRecipes = applyFilters( filtresTags, initialRecipes);
+                currentRecipes = applyFilters(filtresTags, initialRecipes);
                 renderRecipes(currentRecipes);
                 element.closest('.dropdown').classList.remove('show');
             }
         })
+        const inputIngredients = document.querySelector('#search-ingredients');
+
+        inputIngredients.addEventListener('input', (e) => {
+            const searchValue = e.target.value.toLowerCase().trim();
+            let filteredIngredients = [];
+            if (searchValue.length === 0) {
+                filteredIngredients = [...ingredients];
+            }
+            else {
+                filteredIngredients = [...ingredients].filter((ingredient) => {
+                    return ingredient.toLowerCase().includes(searchValue);
+                });
+            }
+            const ingredientsList = document.querySelector('#ingredients-list');
+            ingredientsList.innerHTML = '';
+            filteredIngredients.forEach((ingredient) => {
+                ingredientsList.innerHTML += `<li>${ingredient}</li>`
+
+            })
+        });
+
+        const inputAppareils = document.querySelector('#search-appareils');
+        inputAppareils.addEventListener('input', (e) => {
+            const searchValue = e.target.value.toLowerCase().trim();
+            let filteredAppareils = [];
+            if (searchValue.length === 0) {
+                filteredAppareils = [...appareils];
+            }
+            else {
+                filteredAppareils = [...appareils].filter((appareil) => {
+                    return appareil.toLowerCase().includes(searchValue);
+                });
+            }
+            const appareilsList = document.querySelector('#appareils-list');
+            appareilsList.innerHTML = '';
+            filteredAppareils.forEach((appareil) => {
+                appareilsList.innerHTML += `<li>${appareil}</li>`
+            })
+        });
+
+        const inputUstensiles = document.querySelector('#search-ustensiles');
+        inputUstensiles.addEventListener('input', (e) => {
+            const searchValue = e.target.value.toLowerCase().trim();
+            let filteredUstensiles = [];
+            if (searchValue.length === 0) {
+                filteredUstensiles = [...ustensils];
+            }
+            else {
+                filteredUstensiles = [...ustensils].filter((ustensile) => {
+                    return ustensile.toLowerCase().includes(searchValue);
+                });
+            }
+            const ustensilesList = document.querySelector('#ustensiles-list');
+            ustensilesList.innerHTML = '';
+            filteredUstensiles.forEach((ustensile) => {
+                ustensilesList.innerHTML += `<li>${ustensile}</li>`
+            })
+        });
     });
 
     function deleteTag(e) {
-    
+
         const tagParent = e.target.parentElement;
         tagParent.remove();
         const type = tagParent.getAttribute('data-type');
         const tagValue = tagParent.getAttribute('data-content').toLowerCase();
         filtresTags[type] = filtresTags[type].filter(tag => tag !== tagValue);
         console.log(tagParent.getAttribute('data-content'));
-        currentRecipes = applyFilters( filtresTags, initialRecipes);
+        currentRecipes = applyFilters(filtresTags, initialRecipes);
         renderRecipes(currentRecipes);
     }
 }
 
-function applyFilters( filtresTags, initialRecipes) {
+function applyFilters(filtresTags, initialRecipes) {
     const { ingredients, appliance, ustensils } = filtresTags;
     console.log(ingredients);
     const filtredRecipes = [...initialRecipes].filter(recipe => {
@@ -206,4 +265,4 @@ function applyFilters( filtresTags, initialRecipes) {
 }
 
 // export les fonctions 
-export {renderRecipes, renderFilters}
+export { renderRecipes, renderFilters }

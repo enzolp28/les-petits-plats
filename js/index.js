@@ -18,7 +18,6 @@ async function getRecipes() {
     return recipes
 }
 
-
 const mainSearch = document.querySelector('#main-search');
 
 // Permet de rechercher dans les recettes
@@ -72,27 +71,26 @@ mainSearch.addEventListener('input', (e) => {
     renderFilters(filteredRecipes, filtresTags, initialRecipes);
 });
 
-const inputIngredients = document.querySelector('#search-ingredients');
+// const inputIngredients = document.querySelector('#search-ingredients');
 
-inputIngredients.addEventListener('input', (e) => {
-    const searchValue = e.target.value.toLowerCase().trim();
-    let filteredIngredients = [];
-    if (searchValue.length === 0) {
-        filteredIngredients = [...ingredients];
+// inputIngredients.addEventListener('input', (e) => {
+//     const searchValue = e.target.value.toLowerCase().trim();
+//     let filteredIngredients = [];
+//     if (searchValue.length === 0) {
+//         filteredIngredients = [...ingredients];
+//     }
+//     else {
+//         filteredIngredients = [...ingredients].filter((ingredient) => {
+//             return ingredient.toLowerCase().includes(searchValue);
+//         });
+//     }
+//     const ingredientsList = document.querySelector('#ingredients-list');
+//     ingredientsList.innerHTML = '';
+//     filteredIngredients.forEach((ingredient) => {
+//         ingredientsList.innerHTML += `<li>${ingredient}</li>`
 
-    }
-    else {
-        filteredIngredients = [...ingredients].filter((ingredient) => {
-            return ingredient.toLowerCase().includes(searchValue);
-        });
-    }
-    const ingredientsList = document.querySelector('#ingredients-list');
-    ingredientsList.innerHTML = '';
-    filteredIngredients.forEach((ingredient) => {
-        ingredientsList.innerHTML += `<li>${ingredient}</li>`
-
-    })
-});
+//     })
+// });
 
 function handleOpenDropdown() {
     const arrowMenu = document.querySelectorAll('.arrow');
