@@ -28,6 +28,7 @@ mainSearch.addEventListener('input', (e) => {
     if (searchValue.length === 0) {
         currentRecipes = initialRecipes;
         renderRecipes(currentRecipes);
+        renderFilters(currentRecipes, filtresTags, initialRecipes);
         return;
     }
 
