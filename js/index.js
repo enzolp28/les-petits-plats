@@ -1,10 +1,14 @@
 // import des fonctions pour pouvoir les utiliser dans ce fichier
-import { renderRecipes, renderFilters } from './renders.js';
+import { renderRecipes, renderFilters, applyFilters } from './renders.js';
 
 
 let currentRecipes;
 let initialRecipes;
+console.log(currentRecipes);
+console.log(initialRecipes);
+
 let filtresTags = {
+    searchValue: '',
     ingredients: [],
     appliance: [],
     ustensils: []
@@ -23,53 +27,41 @@ const mainSearch = document.querySelector('#main-search');
 // Permet de rechercher dans les recettes
 mainSearch.addEventListener('input', (e) => {
     const searchValue = e.target.value.toLowerCase().trim();
-    console.log(searchValue);
+
 
     if (searchValue.length === 0) {
-        currentRecipes = initialRecipes;
+        //currentRecipes = initialRecipes;
+        filtresTags.searchValue = "";
+        console.log('aaaaa');
+        currentRecipes = applyFilters(filtresTags, initialRecipes);
         renderRecipes(currentRecipes);
-        renderFilters(currentRecipes, filtresTags, initialRecipes);
         return;
     }
+
 
     // tant que la recherche est trop courte on ne fait rien
     if (searchValue.length < 3) {
         return;
     };
-
-    /* boucle native 
-    
-        const filteredRecipes = [];
-        const searchValueLower = searchValue.toLowerCase();
-
-        for (let i = 0; i < currentRecipes.length; i++) {
-            const recipe = currentRecipes[i];
-            const recipeNameIncludesSearchValue = recipe.name.toLowerCase().includes(searchValueLower);
-            const recipeDescriptionIncludesSearchValue = recipe.description.toLowerCase().includes(searchValueLower);
-            
-            let ingredientIncludesSearchValue = false;
-            for (let j = 0; j < recipe.ingredients.length; j++) {
-                if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchValueLower)) {
-                    ingredientIncludesSearchValue = true;
-                    break; // On peut arrêter la boucle dès qu'on trouve une correspondance
-                }
-            }
-            
-            if (recipeNameIncludesSearchValue || ingredientIncludesSearchValue || recipeDescriptionIncludesSearchValue) {
-            filteredRecipes.push(recipe);
-        }
-        }
-
-    */
+    filtresTags.searchValue = searchValue;
+    const filtredRecipies = applyFilters(filtresTags, initialRecipes);
+    renderRecipes(filtredRecipies);
+    // const filteredRecipes = currentRecipes.filter((recipe) => {
+    //     return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
+    // });
 
 
-    const filteredRecipes = currentRecipes.filter((recipe) => {
-        return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
-    });
-
-
-    renderRecipes(filteredRecipes);
-    renderFilters(filteredRecipes, filtresTags, initialRecipes);
+    // si aucune recette ne correspond à la recherche afficher
+    // if (filteredRecipes.length === 0) {
+    //     console.log('aucune recette ne correspond à la recherche');
+    //     let html = `<p>Aucune recette ne correspond à ${searchValue}</p>`;
+    //     document.querySelector('.container-card').innerHTML = html;
+    //     return;
+    // }
+    // renderRecipes(filteredRecipes);
+    // console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
+    // currentRecipes = renderFilters(filteredRecipes, filtresTags, initialRecipes);
+    // console.log('currentRecipes', currentRecipes);
 });
 
 // const inputIngredients = document.querySelector('#search-ingredients');
@@ -102,7 +94,7 @@ function handleOpenDropdown() {
             dropdownParent.classList.toggle('show');
             arrowMenu[index].classList.toggle('rotate-180');
             console.log(index);
-            
+
         });
     });
 }
