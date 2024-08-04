@@ -1,21 +1,17 @@
 // import des fonctions pour pouvoir les utiliser dans ce fichier
-import { renderRecipes, renderFilters } from './renders.js';
+import { displayRecettes, displayFiltres, displayLists } from './renders.js';
+
+let recettes;
+let recettesActuelles;
 
 
-let currentRecipes;
-let initialRecipes;
-let filtresTags = {
-    ingredients: [],
-    appliance: [],
-    ustensils: []
-}
+
 
 // Récupère les recettes dans le fichier json
-async function getRecipes() {
+async function getRecettes() {
     const response = await fetch('./api/recipes.json');
-    console.log(response);
-    const recipes = await response.json();
-    return recipes
+    const recettes = await response.json();
+    return recettes
 }
 
 const mainSearch = document.querySelector('#main-search');
@@ -23,12 +19,9 @@ const mainSearch = document.querySelector('#main-search');
 // Permet de rechercher dans les recettes
 mainSearch.addEventListener('input', (e) => {
     const searchValue = e.target.value.toLowerCase().trim();
-    console.log(searchValue);
 
     if (searchValue.length === 0) {
-        currentRecipes = initialRecipes;
-        renderRecipes(currentRecipes);
-        renderFilters(currentRecipes, filtresTags, initialRecipes);
+        displayRecettes(recettes)
         return;
     }
 
@@ -37,40 +30,36 @@ mainSearch.addEventListener('input', (e) => {
         return;
     };
 
-    /* boucle native 
-    
-        const filteredRecipes = [];
-        const searchValueLower = searchValue.toLowerCase();
-
-        for (let i = 0; i < currentRecipes.length; i++) {
-            const recipe = currentRecipes[i];
-            const recipeNameIncludesSearchValue = recipe.name.toLowerCase().includes(searchValueLower);
-            const recipeDescriptionIncludesSearchValue = recipe.description.toLowerCase().includes(searchValueLower);
-            
-            let ingredientIncludesSearchValue = false;
-            for (let j = 0; j < recipe.ingredients.length; j++) {
-                if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchValueLower)) {
-                    ingredientIncludesSearchValue = true;
-                    break; // On peut arrêter la boucle dès qu'on trouve une correspondance
-                }
-            }
-            
-            if (recipeNameIncludesSearchValue || ingredientIncludesSearchValue || recipeDescriptionIncludesSearchValue) {
-            filteredRecipes.push(recipe);
-        }
-        }
-
-    */
 
 
-    const filteredRecipes = currentRecipes.filter((recipe) => {
-        return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
+    const recettesFiltrees = recettesActuelles.filter((recette) => {
+        return recette.name.toLowerCase().includes(searchValue) || recette.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recette.description.toLowerCase().includes(searchValue);
     });
 
 
-    renderRecipes(filteredRecipes);
-    renderFilters(filteredRecipes, filtresTags, initialRecipes);
+    displayRecettes(recettesFiltrees)
 });
+
+function handleOpenDropdown() {
+    const arrowMenu = document.querySelectorAll('.arrow');
+    const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+    
+    dropdownHeaders.forEach((dropdownHeader, index) => {
+        dropdownHeader.addEventListener('click', e => {
+            const dropdownParent = e.target.closest('.dropdown');
+            dropdownParent.classList.toggle('show');
+            arrowMenu[index].classList.toggle('rotate-180');
+            
+        });
+    });
+}
+
+
+
+
+/*
+
+
 
 // const inputIngredients = document.querySelector('#search-ingredients');
 
@@ -93,26 +82,16 @@ mainSearch.addEventListener('input', (e) => {
 //     })
 // });
 
-function handleOpenDropdown() {
-    const arrowMenu = document.querySelectorAll('.arrow');
-    const dropdownHeaders = document.querySelectorAll('.dropdown-header');
-    dropdownHeaders.forEach((dropdownHeader, index) => {
-        dropdownHeader.addEventListener('click', e => {
-            const dropdownParent = e.target.closest('.dropdown');
-            dropdownParent.classList.toggle('show');
-            arrowMenu[index].classList.toggle('rotate-180');
-            console.log(index);
-            
-        });
-    });
-}
-
+*/
 
 async function init() {
-    initialRecipes = await getRecipes();
-    currentRecipes = initialRecipes;
-    renderRecipes(currentRecipes);
-    renderFilters(currentRecipes, filtresTags, initialRecipes);
+    recettes = await getRecettes();
+    recettesActuelles = recettes
+    displayRecettes(recettes);
+
+    const { appareils, ustensils, ingredients } = displayFiltres(recettesActuelles);
+
+    displayLists(ingredients, appareils, ustensils);
     handleOpenDropdown();
 
 }
