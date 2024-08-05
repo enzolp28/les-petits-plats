@@ -87,6 +87,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
         const tagIngredients = document.querySelector('#tag-ingredients');
         const liIngredients = document.querySelectorAll('.tag-ingredient');
+        const arrowsIcon = document.querySelectorAll('.arrow');
 
         liIngredients.forEach(element => {
             element.addEventListener('click', () => {
@@ -110,6 +111,9 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                     console.log(currentRecipes);
                     //renderRecipes(currentRecipes);
                     element.closest('.dropdown').classList.remove('show');
+                    arrowsIcon.forEach(arrow => {
+                        arrow.classList.remove('rotate-180');
+                    })
                     renderApp(currentRecipes, filtresTags, initialRecipes);
 
                 }
@@ -141,6 +145,9 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                     currentRecipes = applyFilters(filtresTags, initialRecipes);
                     //renderRecipes(currentRecipes);
                     element.closest('.dropdown').classList.remove('show');
+                    arrowsIcon.forEach(arrow => {
+                        arrow.classList.remove('rotate-180');
+                    })
                     renderApp(currentRecipes, filtresTags, initialRecipes);
                 }
             })
@@ -171,25 +178,28 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                     currentRecipes = applyFilters(filtresTags, initialRecipes);
                     //renderRecipes(currentRecipes);
                     element.closest('.dropdown').classList.remove('show');
+                    arrowsIcon.forEach(arrow => {
+                        arrow.classList.remove('rotate-180');
+                    })
                     renderApp(currentRecipes, filtresTags, initialRecipes);
                 }
             })
 
 
 
-            const deleteInput = document.querySelectorAll('#delete-search');
-
-            deleteInput.forEach(element => {
-                element.addEventListener('click', () => {
-                    inputIngredients.value = '';
-                    renderFilters(currentRecipes, filtresTags, initialRecipes);
-                    console.log("zzzz");
-                })
-            })
-
+            
         });
-
+        
     }
+
+    const deleteInput = document.querySelectorAll('.delete-search');
+    deleteInput.forEach(element => {
+        element.addEventListener('click', () => {
+            inputIngredients.value = '';
+            renderFilters(currentRecipes, filtresTags, initialRecipes);
+            console.log("zzzz");
+        })
+    })
 
     const inputIngredients = document.querySelector('#search-ingredients');
     let searchValue = '';

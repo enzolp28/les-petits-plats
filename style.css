@@ -152,7 +152,7 @@ main {
     top: 13px;
 }
 
-#delete-search {
+.delete-search {
     position: absolute;
     right: 55px;
     top: 15px;
