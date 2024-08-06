@@ -156,6 +156,7 @@ main {
     position: absolute;
     right: 55px;
     top: 15px;
+    cursor: pointer;
 }
 
 li {
@@ -281,7 +282,7 @@ li {
     cursor: pointer;
     padding: 10px 20px;
     font-size: 14px;
-    
+
 
 }
 

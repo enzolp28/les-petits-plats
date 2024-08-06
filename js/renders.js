@@ -187,9 +187,9 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
 
 
-            
+
         });
-        
+
     }
 
     const deleteInput = document.querySelectorAll('.delete-search');
@@ -225,6 +225,9 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             }
         }
     });
+    document.querySelector('#remove-search-ingredients').addEventListener('click', () => {
+        renderLists(ingredients, appareils, ustensils);
+    })
     const inputAppareils = document.querySelector('#search-appareils');
     inputAppareils.addEventListener('input', (e) => {
         const searchValue = e.target.value.toLowerCase().trim();
@@ -293,7 +296,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
 function applyFilters(filtresTags, initialRecipes) {
     const { ingredients, appliance, ustensils, searchValue } = filtresTags;
-    console.log('searchValue',searchValue);
+    console.log('searchValue', searchValue);
     const filtredRecipes = [...initialRecipes].filter(recipe => {
         const applianceInRecipe = recipe.appliance.toLowerCase();
         const ustensilsInRecipe = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
@@ -307,8 +310,8 @@ function applyFilters(filtresTags, initialRecipes) {
         } else {
             //resultAppliance = appliance.includes(applianceInRecipe);
             // resultAppliance = filtresTags.appliance.every(appliance => applianceInRecipe.includes(appliance.toLowerCase()));
-            resultSearch =  recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
-            
+            resultSearch = recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
+
         }
         let resultAppliance = false;
         if (appliance.length === 0) {
@@ -341,4 +344,4 @@ function applyFilters(filtresTags, initialRecipes) {
 }
 
 // export les fonctions 
-export { renderRecipes, renderFilters, applyFilters };
+export { applyFilters, renderFilters, renderRecipes };
