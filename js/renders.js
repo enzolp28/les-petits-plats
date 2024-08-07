@@ -204,8 +204,6 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
 
 
-
-
     const inputIngredients = document.querySelector('#search-ingredients');
     let searchValue = '';
 
@@ -230,6 +228,8 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             }
         }
     });
+
+    
     const inputAppareils = document.querySelector('#search-appareils');
     inputAppareils.addEventListener('input', (e) => {
         const inputValue = e.target.value.toLowerCase().trim();
@@ -345,4 +345,4 @@ function applyFilters(filtresTags, initialRecipes) {
 }
 
 // export les fonctions 
-export { renderRecipes, renderFilters, applyFilters };
+export { applyFilters, renderFilters, renderRecipes };
