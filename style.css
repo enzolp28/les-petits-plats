@@ -146,7 +146,7 @@ main {
     /* margin-bottom: 20px; */
 }
 
-#search {
+.search {
     position: absolute;
     right: 32px;
     top: 13px;
@@ -156,6 +156,7 @@ main {
     position: absolute;
     right: 55px;
     top: 15px;
+    cursor: pointer;
 }
 
 li {

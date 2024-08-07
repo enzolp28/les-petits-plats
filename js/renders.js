@@ -60,8 +60,6 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         recipe.ingredients.forEach((ingredient) => {
             ingredients.add(ingredient.ingredient);
         })
-        // ustensils.add(...recipe.ustensils);
-        //appareilsList.innerHTML += `<li>${recipe.appliance}</li>`
     })
 
     renderLists(ingredients, appareils, ustensils);
@@ -184,22 +182,29 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                     renderApp(currentRecipes, filtresTags, initialRecipes);
                 }
             })
-
-
-
-            
         });
-        
     }
 
-    const deleteInput = document.querySelectorAll('.delete-search');
-    deleteInput.forEach(element => {
-        element.addEventListener('click', () => {
-            inputIngredients.value = '';
-            renderFilters(currentRecipes, filtresTags, initialRecipes);
-            console.log("zzzz");
-        })
-    })
+    const deleteInputElements = document.querySelectorAll('.delete-search');
+
+    deleteInputElements.forEach(deleteButton => {
+        deleteButton.addEventListener('click', (event) => {
+            // Trouver l'élément input associé au bouton cliqué
+
+            const inputElement = event.target.closest('.dropdown-content').querySelector('input');
+            console.log('inputElement', inputElement);
+            
+            if (inputElement) {
+                inputElement.value = '';
+                renderFilters(currentRecipes, filtresTags, initialRecipes);
+                console.log("Input cleared");
+            }
+        });
+    });
+
+
+
+
 
     const inputIngredients = document.querySelector('#search-ingredients');
     let searchValue = '';
@@ -227,14 +232,14 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
     });
     const inputAppareils = document.querySelector('#search-appareils');
     inputAppareils.addEventListener('input', (e) => {
-        const searchValue = e.target.value.toLowerCase().trim();
+        const inputValue = e.target.value.toLowerCase().trim();
         let filteredAppareils = [];
-        if (searchValue.length === 0) {
+        if (inputValue.length === 0) {
             filteredAppareils = [...appareils];
         }
         else {
             filteredAppareils = [...appareils].filter((appareil) => {
-                return appareil.toLowerCase().includes(searchValue);
+                return appareil.toLowerCase().includes(inputValue);
             });
         }
 
@@ -244,14 +249,13 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         } catch (error) {
             console.log(error);
         }
-        // const appareilsList = document.querySelector('#appareils-list');
-        // appareilsList.innerHTML = '';
-        // filteredAppareils.forEach((appareil) => {
-        //     appareilsList.innerHTML += `<li>${appareil}</li>`
-        // })
+
     });
 
+
+
     const inputUstensiles = document.querySelector('#search-ustensiles');
+
     inputUstensiles.addEventListener('input', (e) => {
         const searchValue = e.target.value.toLowerCase().trim();
         let filteredUstensiles = [];
@@ -293,7 +297,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
 function applyFilters(filtresTags, initialRecipes) {
     const { ingredients, appliance, ustensils, searchValue } = filtresTags;
-    console.log('searchValue',searchValue);
+    console.log('searchValue', searchValue);
     const filtredRecipes = [...initialRecipes].filter(recipe => {
         const applianceInRecipe = recipe.appliance.toLowerCase();
         const ustensilsInRecipe = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
@@ -307,8 +311,8 @@ function applyFilters(filtresTags, initialRecipes) {
         } else {
             //resultAppliance = appliance.includes(applianceInRecipe);
             // resultAppliance = filtresTags.appliance.every(appliance => applianceInRecipe.includes(appliance.toLowerCase()));
-            resultSearch =  recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
-            
+            resultSearch = recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
+
         }
         let resultAppliance = false;
         if (appliance.length === 0) {
