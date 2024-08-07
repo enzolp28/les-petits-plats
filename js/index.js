@@ -52,16 +52,16 @@ mainSearch.addEventListener('input', (e) => {
 
 
     // si aucune recette ne correspond à la recherche afficher
-    // if (filteredRecipes.length === 0) {
-    //     console.log('aucune recette ne correspond à la recherche');
-    //     let html = `<p>Aucune recette ne correspond à ${searchValue}</p>`;
-    //     document.querySelector('.container-card').innerHTML = html;
-    //     return;
-    // }
-    // renderRecipes(filteredRecipes);
-    // console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
-    // currentRecipes = renderFilters(filteredRecipes, filtresTags, initialRecipes);
-    // console.log('currentRecipes', currentRecipes);
+    if (filtredRecipies.length === 0) {
+        console.log('aucune recette ne correspond à la recherche');
+        let html = `<p class="no-result">Aucune recette ne correspond à ${searchValue}</p>`;
+        document.querySelector('.container-card').innerHTML = html;
+        return;
+    }
+    renderRecipes(filtredRecipies);
+    console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
+    currentRecipes = renderFilters(filteredRecipes, filtresTags, initialRecipes);
+    console.log('currentRecipes', currentRecipes);
 });
 
 // const inputIngredients = document.querySelector('#search-ingredients');
