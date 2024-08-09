@@ -1,3 +1,4 @@
+// rendu des recettes
 function renderRecipes(recipes) {
     let html = '';
     recipes.forEach((recipe) => {
@@ -41,6 +42,7 @@ function renderApp(currentRecipes, filtresTags, initialRecipes) {
 
 }
 
+// rendu des filtres ustensiles, appareils et ingredients
 function renderFilters(currentRecipes, filtresTags, initialRecipes) {
     let appareils = new Set();
     let ustensils = new Set();
@@ -50,6 +52,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
     const ingredientsList = document.querySelector('#ingredients-list');
 
     // Add avec Set permet de ne pas dupliquer les appareils dans la liste
+    //recupere depuis les recettes en cours les appareils, ustensiles et ingredients
     currentRecipes.forEach((recipe) => {
         appareils.add(recipe.appliance);
 
@@ -61,7 +64,7 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             ingredients.add(ingredient.ingredient);
         })
     })
-
+    // rendu des listes des filtres
     renderLists(ingredients, appareils, ustensils);
 
 
@@ -87,11 +90,13 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         const liIngredients = document.querySelectorAll('.tag-ingredient');
         const arrowsIcon = document.querySelectorAll('.arrow');
 
+        // gestion des cliques sur les tags
         liIngredients.forEach(element => {
             element.addEventListener('click', () => {
                 const text = element.innerText;
                 if (!filtresTags.ingredients.includes(text)) {
                     filtresTags.ingredients.push(text.toLowerCase());
+                    // affiche le tag sur le DOM
                     const tag = document.createElement('div');
                     tag.classList.add('tag');
                     tag.setAttribute('data-type', 'ingredients');
@@ -104,21 +109,23 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
                     button.innerText = 'X';
                     button.addEventListener('click', deleteTag);
                     tag.appendChild(button);
-                    tagIngredients.appendChild(tag);
+                    tagIngredients.appendChild(tag)
+                    // Applique le filtre avec le tag choisi
                     currentRecipes = applyFilters(filtresTags, initialRecipes);
                     console.log(currentRecipes);
                     //renderRecipes(currentRecipes);
-                    element.closest('.dropdown').classList.remove('show');
+
+                    element.closest('.dropdown').classList.remove('show'); //fermer la liste déroulante si le tag est choisi
                     arrowsIcon.forEach(arrow => {
                         arrow.classList.remove('rotate-180');
                     })
-                    renderApp(currentRecipes, filtresTags, initialRecipes);
+
+                    renderApp(currentRecipes, filtresTags, initialRecipes); // reafficher les recettes et les filtres après l'ajout du tag
 
                 }
                 ;
             })
         });
-
 
         const liAppareils = document.querySelectorAll('.tag-appareil');
         const tagAppareils = document.querySelector('#tag-appareils');
@@ -189,15 +196,13 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
     deleteInputElements.forEach(deleteButton => {
         deleteButton.addEventListener('click', (event) => {
-            // Trouver l'élément input associé au bouton cliqué
 
+            // Trouver l'élément input associé au button X cliqué
             const inputElement = event.target.closest('.dropdown-content').querySelector('input');
-            console.log('inputElement', inputElement);
-            
+
             if (inputElement) {
                 inputElement.value = '';
-                renderFilters(currentRecipes, filtresTags, initialRecipes);
-                console.log("Input cleared");
+                renderFilters(currentRecipes, filtresTags, initialRecipes); // reinitialiser les filtres et les reafficher
             }
         });
     });
@@ -221,15 +226,15 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             }
 
             try {
-                const filteredIngredientsSet = new Set(filteredIngredients);
-                renderLists(filteredIngredientsSet, appareils, ustensils);
+                // const filteredIngredientsSet = new Set(filteredIngredients);
+                renderLists(filteredIngredients, appareils, ustensils);
             } catch (error) {
                 console.log(error);
             }
         }
     });
 
-    
+
     const inputAppareils = document.querySelector('#search-appareils');
     inputAppareils.addEventListener('input', (e) => {
         const inputValue = e.target.value.toLowerCase().trim();
@@ -244,8 +249,8 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
         }
 
         try {
-            const filteredAppareilsSet = new Set(filteredAppareils);
-            renderLists(ingredients, filteredAppareilsSet, ustensils);
+            // const filteredAppareilsSet = new Set(filteredAppareils);
+            renderLists(ingredients, filteredAppareils, ustensils);
         } catch (error) {
             console.log(error);
         }
@@ -255,7 +260,6 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
 
 
     const inputUstensiles = document.querySelector('#search-ustensiles');
-
     inputUstensiles.addEventListener('input', (e) => {
         const searchValue = e.target.value.toLowerCase().trim();
         let filteredUstensiles = [];
@@ -268,27 +272,24 @@ function renderFilters(currentRecipes, filtresTags, initialRecipes) {
             });
         }
         try {
-            const filteredUstensilesSet = new Set(filteredUstensiles);
-            renderLists(ingredients, appareils, filteredUstensilesSet);
+            // const filteredUstensilesSet = new Set(filteredUstensiles);
+            renderLists(ingredients, appareils, filteredUstensiles);
         } catch (error) {
             console.log(error);
         }
-        // const ustensilesList = document.querySelector('#ustensiles-list');
-        // ustensilesList.innerHTML = '';
-        // filteredUstensiles.forEach((ustensile) => {
-        //     ustensilesList.innerHTML += `<li>${ustensile}</li>`
-        // })
+
     });
 
-
+    // gestion du btn X
     function deleteTag(e) {
-
         const tagParent = e.target.parentElement;
-        tagParent.remove();
+        tagParent.remove(); // supprime le tag parent du btn X
         const type = tagParent.getAttribute('data-type');
         const tagValue = tagParent.getAttribute('data-content').toLowerCase();
-        filtresTags[type] = filtresTags[type].filter(tag => tag !== tagValue);
-        console.log(tagParent.getAttribute('data-content'));
+        console.log('avant supression du tag', [...filtresTags[type]]);
+        
+        filtresTags[type] = filtresTags[type].filter(tag => tag !== tagValue)
+        console.log('apres supression du tag', [...filtresTags[type]]); // supprime le tag depuis filtresTags
         currentRecipes = applyFilters(filtresTags, initialRecipes);
         // renderRecipes(currentRecipes);
         renderApp(currentRecipes, filtresTags, initialRecipes);
@@ -345,4 +346,4 @@ function applyFilters(filtresTags, initialRecipes) {
 }
 
 // export les fonctions 
-export { applyFilters, renderFilters, renderRecipes };
+export { applyFilters, renderFilters, renderRecipes, renderApp };

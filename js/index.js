@@ -1,5 +1,5 @@
 // import des fonctions pour pouvoir les utiliser dans ce fichier
-import { renderRecipes, renderFilters, applyFilters } from './renders.js';
+import { renderRecipes, renderFilters, applyFilters, renderApp } from './renders.js';
 
 
 let currentRecipes;
@@ -28,11 +28,9 @@ const mainSearch = document.querySelector('#main-search');
 mainSearch.addEventListener('input', (e) => {
     const searchValue = e.target.value.toLowerCase().trim();
 
-
     if (searchValue.length === 0) {
         //currentRecipes = initialRecipes;
         filtresTags.searchValue = "";
-        console.log('aaaaa');
         currentRecipes = applyFilters(filtresTags, initialRecipes);
         renderRecipes(currentRecipes);
         return;
@@ -45,11 +43,11 @@ mainSearch.addEventListener('input', (e) => {
     };
     filtresTags.searchValue = searchValue;
     const filtredRecipies = applyFilters(filtresTags, initialRecipes);
-    renderRecipes(filtredRecipies);
+    //renderRecipes(filtredRecipies);
+    //renderApp(filtredRecipies, filtresTags, initialRecipes);
     // const filteredRecipes = currentRecipes.filter((recipe) => {
     //     return recipe.name.toLowerCase().includes(searchValue) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(searchValue)) || recipe.description.toLowerCase().includes(searchValue);
     // });
-
 
     // si aucune recette ne correspond à la recherche afficher
     if (filtredRecipies.length === 0) {
@@ -60,7 +58,7 @@ mainSearch.addEventListener('input', (e) => {
     }
     renderRecipes(filtredRecipies);
     console.log('+++++++++++++++++++++++++++++++++++++++++++++++');
-    currentRecipes = renderFilters(filteredRecipes, filtresTags, initialRecipes);
+    currentRecipes = renderFilters(filtredRecipies, filtresTags, initialRecipes);
     console.log('currentRecipes', currentRecipes);
 });
 
@@ -103,10 +101,13 @@ function handleOpenDropdown() {
 async function init() {
     initialRecipes = await getRecipes();
     currentRecipes = initialRecipes;
-    renderRecipes(currentRecipes);
-    renderFilters(currentRecipes, filtresTags, initialRecipes);
+    // renderRecipes(currentRecipes);
+    // renderFilters(currentRecipes, filtresTags, initialRecipes);
+    renderApp(currentRecipes, filtresTags, initialRecipes);
     handleOpenDropdown();
 
 }
 
 init()
+
+
